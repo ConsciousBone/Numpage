@@ -8,5 +8,26 @@
     <body>
         <h1>Numpage</h1>
         <p>ts is a test ill do the actual stuff later</p>
+        <button class="numpad-button" data-id="0">print something maybe</button>
     </body>
+
+    <!-- handle the buttons with JS -->
+    <script>
+        document.querySelectorAll(".numpad-button").forEach(button => {
+            button.addEventListener("click", async () => {
+                const buttonID = button.dataset.id;
+                const response = await fetch("/button", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        id: buttonID
+                    })
+                });
+                const data = await response.json();
+                document.getElementById("output").textContent = data.message;
+            });
+        });
+    </script>
 </html>
